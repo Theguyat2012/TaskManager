@@ -18,7 +18,6 @@ export default function Task({title, description}) {
 const styles = StyleSheet.create({
     container: {
         padding: '3%',
-        borderTopWidth: 1,
         borderBottomWidth: 1,
     },
     title: {
