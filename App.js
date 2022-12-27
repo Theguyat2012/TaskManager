@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, Text, View } from 'react-native';
 
 import AppBar from './components/AppBar';
 import Buttons from './components/Buttons';
@@ -11,15 +11,27 @@ export default function App() {
   const [visibleAddTaskModal, setVisibleAddTaskModal] = useState(false);
 
   const renderTasks = () => {
-    return tasks !== null ? tasks.map((element, index) => <Task key={index} title={element[0]} description={element[1]} />) : null;
+    return tasks.length > 0 ?
+      <ScrollView>
+        {tasks.map((element, index) => <Task key={index} title={element[0]} description={element[1]} />)}
+      </ScrollView>
+      :
+      header();
   }
 
+  const header = () => {
+    return (
+      <View style={styles.header}>
+        <Text>All quiet here...</Text>
+      </View>
+    );
+  }
+
+  console.log(tasks);
   return (
     <>
       <AppBar />
-      <ScrollView>
         {renderTasks()}
-      </ScrollView>
       <Buttons setVisibleAddTaskModal={setVisibleAddTaskModal} />
 
       <AddTaskModal
@@ -31,3 +43,11 @@ export default function App() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  header: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
