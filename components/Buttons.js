@@ -2,15 +2,11 @@ import { StyleSheet, View } from 'react-native';
 
 import AddButton from './AddButton';
 
-export default function Buttons() {
-
-    const addTask = () => {
-        alert("add task");
-    }
+export default function Buttons({setVisibleAddTaskModal}) {
 
     return (
         <View style={styles.container}>
-            <AddButton onPress={addTask} />
+            <AddButton onPress={() => setVisibleAddTaskModal(true)} />
         </View>
     );
 }
