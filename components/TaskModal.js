@@ -3,7 +3,7 @@ import { Pressable, Modal, StyleSheet, Text, TextInput, View } from 'react-nativ
 
 import { AntDesign } from '@expo/vector-icons';
 
-export default function AddTaskModal({visibleAddTaskModal, setVisibleAddTaskModal, add, edit, editMode, editIndex, defaultTitle, defaultDescription}) {
+export default function TaskModal({visibleTaskModal, setVisibleTaskModal, add, edit, editMode, editIndex, defaultTitle, defaultDescription}) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
@@ -13,17 +13,21 @@ export default function AddTaskModal({visibleAddTaskModal, setVisibleAddTaskModa
     }, [defaultTitle, defaultDescription]);
 
     const onAddTask = () => {
-        const task = [[title, description]];
-        add(task);
-        reset();
-        setVisibleAddTaskModal(false);
+        if (title) {
+            const task = [[title, description]];
+            add(task);
+            reset();
+            setVisibleTaskModal(false);
+        }
     }
 
     const onEditTask = () => {
-        const editedTask = [title, description];
-        edit(editedTask, editIndex);
-        reset();
-        setVisibleAddTaskModal(false);
+        if (title) {
+            const editedTask = [title, description];
+            edit(editedTask, editIndex);
+            reset();
+            setVisibleTaskModal(false);
+        }
     }
 
     const reset = () => {
@@ -32,12 +36,12 @@ export default function AddTaskModal({visibleAddTaskModal, setVisibleAddTaskModa
     }
 
     return (
-        <Modal animationType='slide' transparent={true} visible={visibleAddTaskModal}>
+        <Modal animationType='slide' transparent={true} visible={visibleTaskModal}>
             <View style={styles.container}>
                 <View style={styles.wrapper}>
                     <View style={styles.header}>
                         <Text style={styles.headerText}>{editMode !== true ? "Add Task" : "Edit Task"}</Text>
-                        <Pressable onPress={() => setVisibleAddTaskModal(false)}>
+                        <Pressable onPress={() => setVisibleTaskModal(false)}>
                             <AntDesign name="closecircle" size="40%" color="red" />
                         </Pressable>
                     </View>

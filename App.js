@@ -4,11 +4,11 @@ import { StyleSheet, ScrollView, Text, View } from 'react-native';
 import AppBar from './components/AppBar';
 import Buttons from './components/Buttons';
 import Task from './components/Task';
-import AddTaskModal from './components/AddTaskModal';
+import TaskModal from './components/TaskModal';
 
 export default function App() {
   const [tasks, setTasks] = useState([]);
-  const [visibleAddTaskModal, setVisibleAddTaskModal] = useState(false);
+  const [visibleTaskModal, setVisibleTaskModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [defaultTitle, setDefaultTitle] = useState("");
@@ -46,7 +46,7 @@ export default function App() {
   const openEdit = (index) => {
     setDefaultTitle(tasks[index][0]);
     setDefaultDescription(tasks[index][1]);
-    setVisibleAddTaskModal(true);
+    setVisibleTaskModal(true);
     setEditMode(true);
   }
 
@@ -85,15 +85,15 @@ export default function App() {
       <AppBar />
         {renderTasks()}
       <Buttons
-        setVisibleAddTaskModal={setVisibleAddTaskModal}
+        setVisibleTaskModal={setVisibleTaskModal}
         setEditMode={setEditMode}
         setDefaultTitle={setDefaultTitle}
         setDefaultDescription={setDefaultDescription}
       />
 
-      <AddTaskModal
-        visibleAddTaskModal={visibleAddTaskModal}
-        setVisibleAddTaskModal={setVisibleAddTaskModal}
+      <TaskModal
+        visibleTaskModal={visibleTaskModal}
+        setVisibleTaskModal={setVisibleTaskModal}
         add={add}
         edit={edit}
         editMode={editMode}
