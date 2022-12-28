@@ -1,18 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pressable, Modal, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { AntDesign } from '@expo/vector-icons';
 
-export default function AddTaskModal({visibleAddTaskModal, setVisibleAddTaskModal, tasks, setTasks}) {
+export default function AddTaskModal({visibleAddTaskModal, setVisibleAddTaskModal, add, edit, editMode, editIndex, defaultTitle, defaultDescription}) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
-    const onPress = () => {
-        const newTask = [[title, description]];
-        setTasks(tasks.concat(newTask));
+    useEffect(() => {
+        setTitle(defaultTitle);
+        setDescription(defaultDescription);
+    }, [defaultTitle, defaultDescription]);
+
+    const onAddTask = () => {
+        const task = [[title, description]];
+        add(task);
+        reset();
+        setVisibleAddTaskModal(false);
+    }
+
+    const onEditTask = () => {
+        const editedTask = [title, description];
+        edit(editedTask, editIndex);
+        reset();
+        setVisibleAddTaskModal(false);
+    }
+
+    const reset = () => {
         setTitle("");
         setDescription("");
-        setVisibleAddTaskModal(false);
     }
 
     return (
@@ -20,25 +36,31 @@ export default function AddTaskModal({visibleAddTaskModal, setVisibleAddTaskModa
             <View style={styles.container}>
                 <View style={styles.wrapper}>
                     <View style={styles.header}>
-                        <Text style={styles.headerText}>Add Task</Text>
+                        <Text style={styles.headerText}>{editMode !== true ? "Add Task" : "Edit Task"}</Text>
                         <Pressable onPress={() => setVisibleAddTaskModal(false)}>
                             <AntDesign name="closecircle" size="40%" color="red" />
                         </Pressable>
                     </View>
                     <View style={styles.inputContainer}>
-                        <InputWrapper defaultValue={title} label="Title" setter={setTitle} />
-                        <InputWrapper defaultValue={description} label="Description" setter={setDescription} />
+                        <InputWrapper value={title} label="Title" setter={setTitle} />
+                        <InputWrapper value={description} label="Description" setter={setDescription} />
                     </View>
-                    <Pressable style={styles.addButton} onPress={onPress}>
-                        <Text style={styles.addButtonText}>Add</Text>
-                    </Pressable>
+                    {editMode !== true ?
+                        <Pressable style={styles.addButton} onPress={onAddTask}>
+                            <Text style={styles.addButtonText}>Add</Text>
+                        </Pressable>
+                        :
+                        <Pressable style={styles.addButton} onPress={onEditTask}>
+                            <Text style={styles.addButtonText}>Edit</Text>
+                        </Pressable>
+                    }
                 </View>
             </View>
         </Modal>
     );
 }
 
-const InputWrapper = ({defaultValue, label, setter}) => {
+const InputWrapper = ({value, label, setter}) => {
     return (
         <View style={styles.inputWrapper}>
             <Text style={styles.inputText}>{label}</Text>
@@ -47,7 +69,7 @@ const InputWrapper = ({defaultValue, label, setter}) => {
                 placeholder={label}
                 onChangeText={setter}
                 returnKeyType='done'
-                defaultValue={defaultValue}
+                value={value}
             />
         </View>
     );

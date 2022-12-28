@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Swipeable } from 'react-native-gesture-handler';
 
-export default function Task({index, title, description, remove}) {
+export default function Task({index, title, description, openEdit, setEditIndex, remove}) {
     let row = [];
 
     const leftActions = () => {
@@ -10,6 +10,8 @@ export default function Task({index, title, description, remove}) {
             <Pressable
                 style={[styles.action, { backgroundColor: 'green' }]}
                 onPress={() => {
+                    openEdit();
+                    setEditIndex(index);
                     if (row[index]) {
                         row[index].close();
                     }

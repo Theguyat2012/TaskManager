@@ -2,10 +2,15 @@ import { StyleSheet, View } from 'react-native';
 
 import AddTaskButton from './AddTaskButton';
 
-export default function Buttons({setVisibleAddTaskModal}) {
+export default function Buttons({setVisibleAddTaskModal, setEditMode, setDefaultTitle, setDefaultDescription}) {
     return (
         <View style={styles.container}>
-            <AddTaskButton onPress={() => setVisibleAddTaskModal(true)} />
+            <AddTaskButton onPress={() => {
+                setVisibleAddTaskModal(true);
+                setEditMode(false);
+                setDefaultTitle("");
+                setDefaultDescription("");
+            }} />
         </View>
     );
 }

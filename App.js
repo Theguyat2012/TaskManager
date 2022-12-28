@@ -9,6 +9,10 @@ import AddTaskModal from './components/AddTaskModal';
 export default function App() {
   const [tasks, setTasks] = useState([]);
   const [visibleAddTaskModal, setVisibleAddTaskModal] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
+  const [defaultTitle, setDefaultTitle] = useState("");
+  const [defaultDescription, setDefaultDescription] = useState("");
 
   const renderTasks = () => {
     return ( tasks.length > 0 ?
@@ -19,9 +23,9 @@ export default function App() {
             index={index}
             title={element[0]}
             description={element[1]}
-            remove={() =>
-              remove(index)
-            }
+            openEdit={() => openEdit(index)}
+            setEditIndex={setEditIndex}
+            remove={() => remove(index)}
           />
         )}
       </ScrollView>
@@ -39,6 +43,31 @@ export default function App() {
     );
   }
 
+  const openEdit = (index) => {
+    setDefaultTitle(tasks[index][0]);
+    setDefaultDescription(tasks[index][1]);
+    setVisibleAddTaskModal(true);
+    setEditMode(true);
+  }
+
+  const add = (task) => {
+    setTasks(tasks.concat(task));
+  }
+
+  const edit = (task, index) => {
+    const array = [];
+
+    for (let i=0; i<tasks.length; i++) {
+      if (i !== index) {
+        array.push(tasks[i]);
+      } else {
+        array.push(task);
+      }
+    }
+
+    setTasks(array);
+  }
+
   const remove = (index) => {
     const array = [];
 
@@ -48,7 +77,6 @@ export default function App() {
       }
     }
 
-    console.log(array);
     setTasks(array);
   }
 
@@ -56,13 +84,22 @@ export default function App() {
     <>
       <AppBar />
         {renderTasks()}
-      <Buttons setVisibleAddTaskModal={setVisibleAddTaskModal} />
+      <Buttons
+        setVisibleAddTaskModal={setVisibleAddTaskModal}
+        setEditMode={setEditMode}
+        setDefaultTitle={setDefaultTitle}
+        setDefaultDescription={setDefaultDescription}
+      />
 
       <AddTaskModal
         visibleAddTaskModal={visibleAddTaskModal}
         setVisibleAddTaskModal={setVisibleAddTaskModal}
-        tasks={tasks}
-        setTasks={setTasks}
+        add={add}
+        edit={edit}
+        editMode={editMode}
+        editIndex={editIndex}
+        defaultTitle={defaultTitle}
+        defaultDescription={defaultDescription}
       />
     </>
   );
