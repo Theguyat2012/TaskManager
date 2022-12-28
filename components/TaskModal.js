@@ -25,7 +25,6 @@ export default function TaskModal({
 
     const onAddTask = () => {
         if (title) {
-            // const task = [[title, description]];
             const task = new TaskObject(title, description);
             add(task);
             reset();
@@ -35,7 +34,6 @@ export default function TaskModal({
 
     const onEditTask = () => {
         if (title) {
-            // const editedTask = [title, description];
             const task = new TaskObject(title, description);
             edit(task, editIndex);
             reset();

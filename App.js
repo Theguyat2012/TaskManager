@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, ScrollView, Text, View } from 'react-native';
+import { FlatList, StyleSheet, ScrollView, Text, View } from 'react-native';
 
 import AppBar from './components/AppBar';
 import Buttons from './components/Buttons';
@@ -15,20 +15,23 @@ export default function App() {
   const [defaultDescription, setDefaultDescription] = useState("");
 
   const renderTasks = () => {
-    return ( tasks.length > 0 ?
-      <ScrollView>
-        {tasks.map((task, index) =>
-          <Task
-            key={index}
-            index={index}
-            title={task.title}
-            description={task.description}
-            openEdit={() => openEdit(index)}
-            setEditIndex={setEditIndex}
-            remove={() => remove(index)}
-          />
-        )}
-      </ScrollView>
+    return (tasks.length > 0 ?
+      <FlatList
+        data={tasks}
+        renderItem={(item) => {
+          return (
+            <Task
+              key={item.index}
+              index={item.index}
+              title={item.item.title}
+              description={item.item.description}
+              openEdit={() => openEdit(item.index)}
+              setEditIndex={setEditIndex}
+              remove={() => remove(item.index)}
+            />
+          );
+        }}
+      />
       :
       header()
     );
