@@ -3,7 +3,18 @@ import { Pressable, Modal, StyleSheet, Text, TextInput, View } from 'react-nativ
 
 import { AntDesign } from '@expo/vector-icons';
 
-export default function TaskModal({visibleTaskModal, setVisibleTaskModal, add, edit, editMode, editIndex, defaultTitle, defaultDescription}) {
+import TaskObject from '../objects/TaskObject';
+
+export default function TaskModal({
+    visibleTaskModal,
+    setVisibleTaskModal,
+    add,
+    edit,
+    editMode,
+    editIndex,
+    defaultTitle,
+    defaultDescription
+}) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
@@ -14,7 +25,8 @@ export default function TaskModal({visibleTaskModal, setVisibleTaskModal, add, e
 
     const onAddTask = () => {
         if (title) {
-            const task = [[title, description]];
+            // const task = [[title, description]];
+            const task = new TaskObject(title, description);
             add(task);
             reset();
             setVisibleTaskModal(false);
@@ -23,8 +35,9 @@ export default function TaskModal({visibleTaskModal, setVisibleTaskModal, add, e
 
     const onEditTask = () => {
         if (title) {
-            const editedTask = [title, description];
-            edit(editedTask, editIndex);
+            // const editedTask = [title, description];
+            const task = new TaskObject(title, description);
+            edit(task, editIndex);
             reset();
             setVisibleTaskModal(false);
         }

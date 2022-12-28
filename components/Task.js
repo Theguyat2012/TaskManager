@@ -2,7 +2,14 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Swipeable } from 'react-native-gesture-handler';
 
-export default function Task({index, title, description, openEdit, setEditIndex, remove}) {
+export default function Task({
+    index,
+    title,
+    description,
+    openEdit,
+    setEditIndex,
+    remove
+}) {
     let row = [];
 
     const leftActions = () => {

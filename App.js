@@ -17,12 +17,12 @@ export default function App() {
   const renderTasks = () => {
     return ( tasks.length > 0 ?
       <ScrollView>
-        {tasks.map((element, index) =>
+        {tasks.map((task, index) =>
           <Task
             key={index}
             index={index}
-            title={element[0]}
-            description={element[1]}
+            title={task.title}
+            description={task.description}
             openEdit={() => openEdit(index)}
             setEditIndex={setEditIndex}
             remove={() => remove(index)}
@@ -44,8 +44,8 @@ export default function App() {
   }
 
   const openEdit = (index) => {
-    setDefaultTitle(tasks[index][0]);
-    setDefaultDescription(tasks[index][1]);
+    setDefaultTitle(tasks[index].title);
+    setDefaultDescription(tasks[index].description);
     setVisibleTaskModal(true);
     setEditMode(true);
   }
