@@ -11,12 +11,13 @@ export default function App() {
   const [visibleAddTaskModal, setVisibleAddTaskModal] = useState(false);
 
   const renderTasks = () => {
-    return tasks.length > 0 ?
+    return ( tasks.length > 0 ?
       <ScrollView>
-        {tasks.map((element, index) => <Task key={index} title={element[0]} description={element[1]} />)}
+        {tasks.map((element, index) => <Task key={index} title={element[0]} description={element[1]}/>)}
       </ScrollView>
       :
-      header();
+      header()
+    );
   }
 
   const header = () => {
@@ -27,7 +28,6 @@ export default function App() {
     );
   }
 
-  console.log(tasks);
   return (
     <>
       <AppBar />
