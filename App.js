@@ -13,7 +13,17 @@ export default function App() {
   const renderTasks = () => {
     return ( tasks.length > 0 ?
       <ScrollView>
-        {tasks.map((element, index) => <Task key={index} title={element[0]} description={element[1]}/>)}
+        {tasks.map((element, index) =>
+          <Task
+            key={index}
+            index={index}
+            title={element[0]}
+            description={element[1]}
+            remove={() =>
+              remove(index)
+            }
+          />
+        )}
       </ScrollView>
       :
       header()
@@ -23,9 +33,23 @@ export default function App() {
   const header = () => {
     return (
       <View style={styles.header}>
-        <Text>All quiet here...</Text>
+        <Text>You're all caught up!</Text>
+        <Text>Add a new task by using the button below.</Text>
       </View>
     );
+  }
+
+  const remove = (index) => {
+    const array = [];
+
+    for (let i=0; i<tasks.length; i++) {
+      if (i !== index) {
+        array.push(tasks[i]);
+      }
+    }
+
+    console.log(array);
+    setTasks(array);
   }
 
   return (
