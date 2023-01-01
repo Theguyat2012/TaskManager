@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { FlatList, StyleSheet, ScrollView, Text, View } from 'react-native';
+import { StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
+import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 
 import AppBar from './components/AppBar';
 import Buttons from './components/Buttons';
@@ -16,21 +17,44 @@ export default function App() {
 
   const renderTasks = () => {
     return (tasks.length > 0 ?
-      <FlatList
+      // <FlatList
+      //   data={tasks}
+      //   renderItem={(item) => {
+      //     return (
+      //       <Task
+      //         key={item.index}
+      //         index={item.index}
+      //         title={item.item.title}
+      //         description={item.item.description}
+      //         openEdit={() => openEdit(item.index)}
+      //         setEditIndex={setEditIndex}
+      //         remove={() => remove(item.index)}
+      //       />
+      //     );
+      //   }}
+      // />
+      <DraggableFlatList
         data={tasks}
-        renderItem={(item) => {
-          return (
-            <Task
-              key={item.index}
-              index={item.index}
-              title={item.item.title}
-              description={item.item.description}
-              openEdit={() => openEdit(item.index)}
-              setEditIndex={setEditIndex}
-              remove={() => remove(item.index)}
-            />
-          );
-        }}
+        onDragEnd={({data}) => setTasks(data)}
+        keyExtractor={(item) => {console.log(item); return item.id}}
+        renderItem={(item) =>
+          <ScaleDecorator>
+            <TouchableOpacity
+              onLongPress={item.drag}
+              disabled={item.isActive}
+            >
+              <Task
+                key={(item) => item.id}
+                index={item.getIndex()}
+                title={item.item.title}
+                description={item.item.description}
+                openEdit={openEdit}
+                setEditIndex={setEditIndex}
+                remove={remove}
+              />
+            </TouchableOpacity>
+          </ScaleDecorator>
+        }
       />
       :
       header()
@@ -54,11 +78,26 @@ export default function App() {
   }
 
   const add = (task) => {
-    setTasks(tasks.concat(task));
+    let array = [];
+
+    tasks.map((element, index) => {
+      element.id = index+1;
+      array = array.concat(element);
+    });
+
+    task.id = array.length+1;
+    array = array.concat(task);
+
+    setTasks(array);
+
+    // Original function
+    // setTasks(tasks.concat(task));
   }
 
   const edit = (task, index) => {
     const array = [];
+
+    task.id = tasks[index].id;
 
     for (let i=0; i<tasks.length; i++) {
       if (i !== index) {
@@ -86,7 +125,9 @@ export default function App() {
   return (
     <>
       <AppBar />
-        {renderTasks()}
+        <View style={styles.container}>
+          {renderTasks()}
+        </View>
       <Buttons
         setVisibleTaskModal={setVisibleTaskModal}
         setEditMode={setEditMode}
@@ -109,6 +150,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   header: {
     alignItems: 'center',
     flex: 1,

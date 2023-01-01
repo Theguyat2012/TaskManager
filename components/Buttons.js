@@ -23,7 +23,7 @@ export default function Buttons({
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor: 'teal',
+        // backgroundColor: 'teal',
         height: '15%',
         justifyContent: 'space-evenly',
     },

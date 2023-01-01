@@ -17,7 +17,7 @@ export default function Task({
             <Pressable
                 style={[styles.action, { backgroundColor: 'green' }]}
                 onPress={() => {
-                    openEdit();
+                    openEdit(index);
                     setEditIndex(index);
                     if (row[index]) {
                         row[index].close();
@@ -36,7 +36,7 @@ export default function Task({
             <Pressable
                 style={[styles.action, { backgroundColor: 'red' }]}
                 onPress={() => {
-                    remove();
+                    remove(index);
                     if (row[index]) {
                         row[index].close();
                     }
