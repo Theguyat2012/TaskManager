@@ -36,7 +36,8 @@ export default function App() {
       <DraggableFlatList
         data={tasks}
         onDragEnd={({data}) => setTasks(data)}
-        keyExtractor={(item) => {console.log(item); return item.id}}
+        keyExtractor={(item) => item.id}
+        style={{ height: '100%' }}
         renderItem={(item) =>
           <ScaleDecorator>
             <TouchableOpacity
