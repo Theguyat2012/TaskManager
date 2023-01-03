@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Pressable, Modal, StyleSheet, Text, TextInput, View } from 'react-native';
+import { PixelRatio, Pressable, Modal, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { AntDesign } from '@expo/vector-icons';
 
@@ -53,7 +53,7 @@ export default function TaskModal({
                     <View style={styles.header}>
                         <Text style={styles.headerText}>{editMode !== true ? "Add Task" : "Edit Task"}</Text>
                         <Pressable onPress={() => setVisibleTaskModal(false)}>
-                            <AntDesign name="closecircle" size="40%" color="red" />
+                            <AntDesign name="closecircle" size={40 * PixelRatio.getFontScale()} color="red" />
                         </Pressable>
                     </View>
                     <View style={styles.inputContainer}>

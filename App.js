@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 
 import AppBar from './components/AppBar';
@@ -37,7 +38,6 @@ export default function App() {
         data={tasks}
         onDragEnd={({data}) => setTasks(data)}
         keyExtractor={(item) => item.id}
-        style={{ height: '100%' }}
         renderItem={(item) =>
           <ScaleDecorator>
             <TouchableOpacity
@@ -126,9 +126,11 @@ export default function App() {
   return (
     <>
       <AppBar />
-        <View style={styles.container}>
-          {renderTasks()}
-        </View>
+
+      <GestureHandlerRootView style={styles.container}>
+        {renderTasks()}
+      </GestureHandlerRootView>
+
       <Buttons
         setVisibleTaskModal={setVisibleTaskModal}
         setEditMode={setEditMode}

@@ -1,11 +1,11 @@
-import { TouchableOpacity } from 'react-native';
+import { PixelRatio, Text, TouchableOpacity } from 'react-native';
 
-import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function AddTaskButton({onPress}) {
   return (
     <TouchableOpacity onPress={onPress}>
-        <Feather name="plus-circle" size="80%" color="teal" />
+        <Ionicons name="add-circle-outline" size={100 * PixelRatio.getFontScale()} color="teal" />
     </TouchableOpacity>
   );
 }

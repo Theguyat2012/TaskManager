@@ -68,7 +68,7 @@ export default function Task({
 const styles = StyleSheet.create({
     container: {
         alignSelf: 'center',
-        padding: 5,
+        padding: 8,
         width: '90%',
     },
     wrapper: {
